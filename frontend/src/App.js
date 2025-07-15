@@ -1,0 +1,114 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
+import Header from './components/Header'
+import WelcomePage from './components/WelcomePage'
+
+import { PrivateRoute as PrivateRouteCustomer } from './components/customers/PrivateRoute'
+import Customers from './components/customers/Customers'
+import HomeCustomers from './pages/customers/HomeCustomers'
+import LoginCustomers from './pages/customers/LoginCustomers'
+import RegisterCustomers from './pages/customers/RegisterCustomers'
+import NewTicketCustomers from './pages/customers/NewTicketCustomers'
+import ViewTicketCustomers from './pages/customers/ViewTicketCustomers'
+import TicketPageCustomers from './pages/customers/TicketPageCustomers'
+
+import { PrivateRoute as PrivateRouteOwner } from './components/owners/PrivateRoute'
+import Owners from './components/owners/Owners'
+import HomeOwners from './pages/owners/HomeOwners'
+import LoginOwners from './pages/owners/LoginOwners'
+import RegisterOwners from './pages/owners/RegisterOwners'
+import NewTicketOwners from './pages/owners/NewTicketOwners'
+import ViewTicketOwners from './pages/owners/ViewTicketOwners'
+import TicketPageOwners from './pages/owners/TicketPageOwners'
+
+// NOTE: Here we have removed the nested routing as the path is the same
+
+function App() {
+  return (
+    <>
+      <Router>
+        <div className='container'>
+          <Header />
+          <Routes>
+            <Route path='/' element={<WelcomePage />} />
+            <Route path='/customers/' element={<HomeCustomers />} />
+            <Route path='/customers/login' element={<LoginCustomers />} />
+            <Route path='/customers/register' element={<RegisterCustomers />} />
+            <Route
+              path='/customers/me'
+              element={
+                <PrivateRouteCustomer>
+                  <Customers />
+                </PrivateRouteCustomer>
+              }
+            />
+            <Route
+              path='/customers/new-ticket'
+              element={
+                <PrivateRouteCustomer>
+                  <NewTicketCustomers />
+                </PrivateRouteCustomer>
+              }
+            />
+            <Route
+              path='/customers/tickets'
+              element={
+                <PrivateRouteCustomer>
+                  <ViewTicketCustomers />
+                </PrivateRouteCustomer>
+              }
+            />
+            <Route
+              path='/customers/ticket/:ticketId'
+              element={
+                <PrivateRouteCustomer>
+                  <TicketPageCustomers />
+                </PrivateRouteCustomer>
+              }
+            />
+            <Route path='/owners/' element={<HomeOwners />} />
+            <Route path='/owners/login' element={<LoginOwners />} />
+            <Route path='/owners/register' element={<RegisterOwners />} />
+            <Route
+              path='/owners/me'
+              element={
+                <PrivateRouteOwner>
+                  <Owners />
+                </PrivateRouteOwner>
+              }
+            />
+            <Route
+              path='/owners/new-ticket'
+              element={
+                <PrivateRouteOwner>
+                  <NewTicketOwners />
+                </PrivateRouteOwner>
+              }
+            />
+            <Route
+              path='/owners/tickets'
+              element={
+                <PrivateRouteOwner>
+                  <ViewTicketOwners />
+                </PrivateRouteOwner>
+              }
+            />
+            <Route
+              path='/owners/ticket/:ticketId'
+              element={
+                <PrivateRouteOwner>
+                  <TicketPageOwners />
+                </PrivateRouteOwner>
+              }
+            />
+          </Routes>
+        </div>
+      </Router>
+      <ToastContainer />
+    </>
+  )
+}
+
+export default App
