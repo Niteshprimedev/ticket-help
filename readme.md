@@ -1,6 +1,6 @@
 # Support Desk App
 
-[Ticket help](tickethelp.heroku.com) application is built where business owners can create a page that allows customers to create tickets and share feedback on thier products/features.
+[Ticket help](tickethelp.heroku.com) application is built where business owners can create a page that allows customers to create tickets and share feedback on their products/features.
 
 Project Link - [View](tickethelp.heroku.com)
 
