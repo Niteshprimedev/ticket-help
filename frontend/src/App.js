@@ -22,6 +22,7 @@ import RegisterOwners from './pages/owners/RegisterOwners'
 import NewTicketOwners from './pages/owners/NewTicketOwners'
 import ViewTicketOwners from './pages/owners/ViewTicketOwners'
 import TicketPageOwners from './pages/owners/TicketPageOwners'
+import ViewProductOwners from './pages/owners/ViewProductOwners'
 
 // NOTE: Here we have removed the nested routing as the path is the same
 
@@ -100,6 +101,14 @@ function App() {
               element={
                 <PrivateRouteOwner>
                   <TicketPageOwners />
+                </PrivateRouteOwner>
+              }
+            />
+            <Route
+              path='/owners/products'
+              element={
+                <PrivateRouteOwner>
+                  <ViewProductOwners />
                 </PrivateRouteOwner>
               }
             />

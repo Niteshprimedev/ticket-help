@@ -1,12 +1,14 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { createOwnerTicket } from '../../features/owners/tickets/ticketSlice'
+import { getOwnerProducts } from '../../features/owners/products/productSlice'
 import BackButton from '../../components/assets/BackButton'
 
 function NewTicketOwners() {
   const { owner } = useSelector((state) => state.ownersAuth)
+  const { products } = useSelector((state) => state.ownersProducts)
 
   const [name] = useState(owner.name)
   const [email] = useState(owner.email)
@@ -31,6 +33,11 @@ function NewTicketOwners() {
       })
       .catch(toast.error)
   }
+
+  // side effects;
+  useEffect(() => {
+    dispatch(getOwnerProducts())
+  }, [])
 
   return (
     <>
@@ -86,10 +93,11 @@ function NewTicketOwners() {
               value={product}
               onChange={(e) => setProduct(e.target.value)}
             >
-              <option value='iPhone'>iPhone</option>
-              <option value='Macbook Pro'>Macbook Pro</option>
-              <option value='iMac'>iMac</option>
-              <option value='iPad'>iPad</option>
+              {/* <option value='iPhone'>iPhone</option>
+              <option value='iPad'>iPad</option> */}
+              {products.map((product) => (
+                <option value={product.name}>{product.name}</option>
+              ))}
             </select>
           </div>
           <div className='form-group'>

@@ -1,4 +1,11 @@
-import { FaSignInAlt, FaSignOutAlt, FaUser, FaHome } from 'react-icons/fa'
+import {
+  FaSignInAlt,
+  FaSignOutAlt,
+  FaUser,
+  FaHome,
+  FaShoppingCart,
+  FaTicketAlt,
+} from 'react-icons/fa'
 import { Link, useNavigate } from 'react-router-dom'
 import { logoutOwner } from '../../features/owners/auth/authSlice'
 import { useDispatch, useSelector } from 'react-redux'
@@ -24,14 +31,24 @@ function HeaderOwners() {
         {owner ? (
           <ul>
             <li>
-              <button className='btn btn-owner' onClick={onLogout}>
-                <FaSignOutAlt /> Logout
-              </button>
+              <Link to='/owners/tickets' className='owner'>
+                <FaTicketAlt></FaTicketAlt> tickets
+              </Link>
+            </li>
+            <li>
+              <Link to='/owners/products' className='owner'>
+                <FaShoppingCart></FaShoppingCart> products
+              </Link>
             </li>
             <li>
               <Link to='/owners/me' className='owner'>
                 <FaUser></FaUser> {owner.name}
               </Link>
+            </li>
+            <li>
+              <button className='btn btn-owner' onClick={onLogout}>
+                <FaSignOutAlt /> Logout
+              </button>
             </li>
           </ul>
         ) : (

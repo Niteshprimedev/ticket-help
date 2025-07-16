@@ -21,6 +21,7 @@ app.use('/api/customers/tickets', require('./routes/customers/ticketRoutes'))
 // Owner Routes
 app.use('/api/owners', require('./routes/owners/ownerRoutes'))
 app.use('/api/owners/tickets', require('./routes/owners/ticketRoutes'))
+app.use('/api/owners/products', require('./routes/owners/productRoutes'))
 
 // Serve Frontend
 if (process.env.NODE_ENV === 'production') {

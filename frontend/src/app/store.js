@@ -3,6 +3,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import ownersAuthReducer from '../features/owners/auth/authSlice'
 import ownersTicketReducer from '../features/owners/tickets/ticketSlice'
 import ownersNoteReducer from '../features/owners/notes/noteSlice'
+import ownersProductReducer from '../features/owners/products/productSlice'
 
 import customersAuthReducer from '../features/customers/auth/authSlice'
 import customersTicketReducer from '../features/customers/tickets/ticketSlice'
@@ -16,5 +17,6 @@ export const store = configureStore({
     ownersAuth: ownersAuthReducer,
     ownersTickets: ownersTicketReducer,
     ownersNotes: ownersNoteReducer,
+    ownersProducts: ownersProductReducer,
   },
 })
