@@ -5,6 +5,7 @@ import { FaUser } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
 import { registerOwner } from '../../features/owners/auth/authSlice'
 import Spinner from '../../components/assets/Spinner'
+import ProductsChecklist from './ProductsCheckList'
 
 function RegisterOwners() {
   const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ function RegisterOwners() {
     password: '',
     confirmPassword: '',
   })
+  const [selectedProducts, setSelectedProducts] = useState([])
 
   const { name, email, password, confirmPassword } = formData
 
@@ -37,13 +39,16 @@ function RegisterOwners() {
   const onSubmit = (e) => {
     e.preventDefault()
 
-    if (password !== confirmPassword) {
+    if (selectedProducts.length === 0) {
+      toast.error('Please select at least one product')
+    } else if (password !== confirmPassword) {
       toast.error('Passwords do not match')
     } else {
       const ownerData = {
         name,
         email,
         password,
+        products: selectedProducts,
       }
 
       dispatch(registerOwner(ownerData))
@@ -128,6 +133,12 @@ function RegisterOwners() {
               placeholder='Confirm password'
               required
             />
+          </div>
+          <div className='form-group'>
+            <ProductsChecklist
+              selectedProducts={selectedProducts}
+              setSelectedProducts={setSelectedProducts}
+            ></ProductsChecklist>
           </div>
           <div className='form-group'>
             <button className='btn btn-block btn-owner'>Submit</button>

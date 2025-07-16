@@ -154,6 +154,13 @@ h3 {
   font-family: inherit;
 }
 
+.form-group input.checkboxes {
+  font-family: inherit;
+  width: auto;
+  padding: 5px;
+  margin-right: 10px;
+}
+
 .form-group label {
   text-align: left;
   display: block;

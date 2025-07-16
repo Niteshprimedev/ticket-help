@@ -3,15 +3,16 @@ const bcrypt = require('bcryptjs')
 
 const Owner = require('../../models/owners/ownerModel')
 const { generateToken } = require('../../helper/generateToken')
+const productService = require('../../helper/productService')
 
 // @desc    Register a new owner user
 // @route   /api/owners/register
 // @access  Public
 const registerOwner = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body
+  const { name, email, password, products } = req.body
 
   // Validation
-  if (!name || !email || !password) {
+  if (!name || !email || !password || products.length === 0) {
     res.status(400)
     throw new Error('Please include all fields')
   }
@@ -34,6 +35,9 @@ const registerOwner = asyncHandler(async (req, res) => {
     email,
     password: hashedPassword,
   })
+
+  // Link Owner to the Product Schema for services;
+  await productService.addOwner(products, ownerUser._id)
 
   if (ownerUser) {
     res.status(201).json({

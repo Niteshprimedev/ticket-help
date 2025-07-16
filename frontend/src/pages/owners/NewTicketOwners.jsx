@@ -40,7 +40,7 @@ function NewTicketOwners() {
         <p className='owner'>Please fill out the form below</p>
       </section>
 
-      <section className='form'>
+      <section className='form owner'>
         <div className='form-group'>
           <label htmlFor='name'>Customer Name</label>
           <input type='text' className='form-control' value={name} disabled />
@@ -59,7 +59,7 @@ function NewTicketOwners() {
               name='customerName'
               className='form-control'
               value={customerName}
-              placeholder='Please enter customer name*'
+              placeholder='Please enter customer name'
               onChange={(e) => setCustomerName(e.target.value)}
             />
           </div>
