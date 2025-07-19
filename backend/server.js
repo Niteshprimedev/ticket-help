@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: false }))
 
 app.use(
   cors({
-    origin: 'https://ticket-help-niteshprimedev.vercel.app/',
+    origin: 'https://ticket-help-niteshprimedev.vercel.app',
     credentials: true,
   })
 )
