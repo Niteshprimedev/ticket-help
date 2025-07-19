@@ -15,6 +15,13 @@ const customerSchema = mongoose.Schema(
       type: String,
       required: [true, 'Please add a password'],
     },
+    gender: {
+      type: String,
+      enum: ['male', 'female', 'prefernot'],
+    },
+    dob: {
+      type: Date,
+    }
   },
   {
     timestamps: true,

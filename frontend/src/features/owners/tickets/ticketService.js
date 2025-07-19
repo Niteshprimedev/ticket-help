@@ -1,4 +1,4 @@
-import axios from 'axios'
+import api from '../../../api'
 
 const API_URL = '/api/owners/tickets/'
 
@@ -10,7 +10,7 @@ const createOwnerTicket = async (ticketData, token) => {
     },
   }
 
-  const response = await axios.post(API_URL, ticketData, config)
+  const response = await api.post(API_URL, ticketData, config)
 
   return response.data
 }
@@ -23,7 +23,7 @@ const getOwnerTickets = async (token) => {
     },
   }
 
-  const response = await axios.get(API_URL, config)
+  const response = await api.get(API_URL, config)
 
   return response.data
 }
@@ -36,7 +36,7 @@ const getOwnerSingleTicket = async (ticketId, token) => {
     },
   }
 
-  const response = await axios.get(API_URL + ticketId, config)
+  const response = await api.get(API_URL + ticketId, config)
 
   return response.data
 }
@@ -49,7 +49,7 @@ const closeOwnerTicket = async (ticketId, token) => {
     },
   }
 
-  const response = await axios.put(
+  const response = await api.put(
     API_URL + ticketId,
     { status: 'closed' },
     config

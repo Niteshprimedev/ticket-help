@@ -6,6 +6,7 @@ import {
   FaShoppingCart,
   FaTicketAlt,
 } from 'react-icons/fa'
+import { AiOutlineInfoCircle } from 'react-icons/ai'
 import { Link, useNavigate } from 'react-router-dom'
 import { logoutOwner } from '../../features/owners/auth/authSlice'
 import { useDispatch, useSelector } from 'react-redux'
@@ -32,7 +33,7 @@ function HeaderOwners() {
           <ul>
             <li>
               <Link to='/owners/tickets' className='owner'>
-                <FaTicketAlt></FaTicketAlt> tickets
+                <FaTicketAlt></FaTicketAlt> Tickets
               </Link>
             </li>
             <li>
@@ -56,6 +57,11 @@ function HeaderOwners() {
             <li>
               <Link to='/' className='owner'>
                 <FaHome /> Home
+              </Link>
+            </li>
+            <li>
+              <Link to='/owners/about-us' className='owner'>
+                <AiOutlineInfoCircle /> About
               </Link>
             </li>
             <li>

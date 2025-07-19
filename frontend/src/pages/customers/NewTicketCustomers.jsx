@@ -1,24 +1,54 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { createCustomerTicket } from '../../features/customers/tickets/ticketSlice'
+import { getCustomerProductOwners } from '../../features/customers/products/productOwnerSlice'
 import BackButton from '../../components/assets/BackButton'
+import { productsData } from '../../data/products'
 
 function NewTicketCustomers() {
   const { customer } = useSelector((state) => state.customersAuth)
+  const { productOwners } = useSelector((state) => state.customersProductOwners)
 
   const [name] = useState(customer.name)
   const [email] = useState(customer.email)
-  const [product, setProduct] = useState('iPhone')
+  const [product, setProduct] = useState(productsData[0].name)
   const [description, setDescription] = useState('')
+  const [productOwner, setProductOwner] = useState('')
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+  const handleProductChange = (e) => {
+    const selectedProduct = e.target.value
+    setProduct(selectedProduct)
+    dispatch(getCustomerProductOwners(selectedProduct))
+  }
+
   const onSubmit = (e) => {
     e.preventDefault()
-    dispatch(createCustomerTicket({ product, description }))
+    if (productOwner === '') {
+      toast.error('Please select a product owner')
+      return
+    }
+
+    const ticketData = {
+      product,
+      description,
+      ownerData: {},
+    }
+
+    for (let productOwnerEl of productOwners) {
+      if (productOwnerEl.hashKey === productOwner) {
+        ticketData.ownerData = productOwnerEl
+        break
+      }
+    }
+
+    // console.log(ticketData)
+
+    dispatch(createCustomerTicket(ticketData))
       .unwrap()
       .then(() => {
         // We got a good response so navigate the user
@@ -27,6 +57,16 @@ function NewTicketCustomers() {
       })
       .catch(toast.error)
   }
+
+  useEffect(() => {
+    // Fetch product owners or any other necessary data here
+    if (productOwners && productOwners.length > 0) {
+      setProductOwner(productOwners[0].hashKey)
+    } else {
+      dispatch(getCustomerProductOwners(product))
+      setProductOwner(productOwners[0]?.hashKey || '')
+    }
+  }, [productOwners])
 
   return (
     <>
@@ -52,26 +92,30 @@ function NewTicketCustomers() {
               name='product'
               id='product'
               value={product}
-              onChange={(e) => setProduct(e.target.value)}
+              onChange={handleProductChange}
             >
-              <option value='iPhone'>iPhone</option>
-              <option value='Macbook Pro'>Macbook Pro</option>
-              <option value='iMac'>iMac</option>
-              <option value='iPad'>iPad</option>
+              {productsData.map((product) => (
+                <option key={product.name} value={product.name}>
+                  {product.name}
+                </option>
+              ))}
             </select>
           </div>
           <div className='form-group'>
             <label htmlFor='product'>Please select your product owner</label>
             <select
-              name='product'
-              id='product'
-              value={product}
-              onChange={(e) => setProduct(e.target.value)}
+              name='productOwner'
+              id='productOwner'
+              value={productOwner}
+              onChange={(e) => setProductOwner(e.target.value)}
             >
-              <option value='iPhone'>iPhone</option>
-              <option value='Macbook Pro'>Macbook Pro</option>
-              <option value='iMac'>iMac</option>
-              <option value='iPad'>iPad</option>
+              {/* <option value='iPhone'>iPhone</option>
+              <option value='iPad'>iPad</option> */}
+              {productOwners.map((productOwner) => (
+                <option key={productOwner.hashKey} value={productOwner.hashKey}>
+                  {productOwner.hashKey}
+                </option>
+              ))}
             </select>
           </div>
           <div className='form-group'>

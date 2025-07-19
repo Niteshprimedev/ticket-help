@@ -45,6 +45,42 @@ export const logoutOwner = createAsyncThunk('auth/logout', async () => {
   await authService.logoutOwner()
 })
 
+// Get Me Owner user
+export const getMeOwner = createAsyncThunk('auth/me', async (_, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().ownersAuth.owner.token
+    return await authService.getMeOwner(token)
+  } catch (error) {
+    return thunkAPI.rejectWithValue(extractErrorMessage(error))
+  }
+})
+
+// Change Password user
+export const changePasswordOwner = createAsyncThunk(
+  'auth/password',
+  async (ownerData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().ownersAuth.owner.token
+      return await authService.changePasswordOwner(ownerData, token)
+    } catch (error) {
+      return thunkAPI.rejectWithValue(extractErrorMessage(error))
+    }
+  }
+)
+
+// Save Account Customer user
+export const saveAccountDetailsOwner = createAsyncThunk(
+  'auth/save',
+  async (ownerData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().ownersAuth.owner.token
+      return await authService.saveAccountDetailsOwner(ownerData, token)
+    } catch (error) {
+      return thunkAPI.rejectWithValue(extractErrorMessage(error))
+    }
+  }
+)
+
 // NOTE: in cases of login or register pending or rejected then user will
 // already be null so no need to set to null in these cases
 
@@ -76,6 +112,26 @@ export const authSlice = createSlice({
       })
       .addCase(logoutOwner.fulfilled, (state) => {
         state.owner = null
+      })
+      .addCase(getMeOwner.fulfilled, (state, action) => {
+        state.owner = action.payload
+        state.isLoading = false
+      })
+      .addCase(saveAccountDetailsOwner.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(saveAccountDetailsOwner.rejected, (state) => {
+        state.isLoading = false
+      })
+      .addCase(saveAccountDetailsOwner.fulfilled, (state, action) => {
+        state.owner = action.payload
+        state.isLoading = false
+      })
+      .addCase(changePasswordOwner.rejected, (state) => {
+        state.isLoading = false
+      })
+      .addCase(changePasswordOwner.fulfilled, (state) => {
+        state.isLoading = false
       })
   },
 })

@@ -37,7 +37,9 @@ function RegisterCustomers() {
   const onSubmit = (e) => {
     e.preventDefault()
 
-    if (password !== confirmPassword) {
+    if (password.length < 8) {
+      toast.error('Password should be at least 8 characters long')
+    } else if (password !== confirmPassword) {
       toast.error('Passwords do not match')
     } else {
       const customerData = {
@@ -58,7 +60,7 @@ function RegisterCustomers() {
             email: '',
             password: '',
             confirmPassword: '',
-          }));
+          }))
           toast.success(`Registered new user - ${customer.name}`)
           navigate('/customers')
         })

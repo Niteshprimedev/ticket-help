@@ -96,7 +96,9 @@ function NewTicketOwners() {
               {/* <option value='iPhone'>iPhone</option>
               <option value='iPad'>iPad</option> */}
               {products.map((product) => (
-                <option value={product.name}>{product.name}</option>
+                <option key={product.name} value={product.name}>
+                  {product.name}
+                </option>
               ))}
             </select>
           </div>

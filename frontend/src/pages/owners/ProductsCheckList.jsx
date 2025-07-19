@@ -8,7 +8,7 @@ const products = [
   'AirPods',
   'Apple Watch',
   'Apple TV',
-];
+]
 
 export default function ProductsChecklist({
   selectedProducts,

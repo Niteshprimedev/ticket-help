@@ -54,12 +54,7 @@ const createOwnerTicket = asyncHandler(async (req, res) => {
   // check if customer exists;
   const customerUser = await Customer.findOne({ email: customerEmail })
 
-  if (!customerUser) {
-    res.status(401)
-    throw new Error('Customer not found')
-  }
-
-  if (customerUser.name !== customerName) {
+  if (!customerUser || customerUser.name !== customerName) {
     res.status(401)
     throw new Error('Please enter correct customer details')
   }
@@ -71,7 +66,7 @@ const createOwnerTicket = asyncHandler(async (req, res) => {
     description,
     status: 'new',
     owner: req.owner._id,
-    createdBy: 'owner',
+    createdBy: req.owner.name,
   })
 
   res.status(201).json(ticket)

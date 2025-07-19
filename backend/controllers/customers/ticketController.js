@@ -1,7 +1,8 @@
 const asyncHandler = require('express-async-handler')
+const jwt = require('jsonwebtoken')
 
 const Ticket = require('../../models/customers/ticketModel')
-const ticketService = require('../../helper/ticketService')
+// const ticketService = require('../../helper/ticketService')
 
 // NOTE: no need to get the user, we already have them on req object from
 // protect middleware. The protect middleware already checks for valid user.
@@ -38,12 +39,21 @@ const getCustomerSingleTicket = asyncHandler(async (req, res) => {
 // @route   POST /api/customers/tickets
 // @access  Private
 const createCustomerTicket = asyncHandler(async (req, res) => {
-  const { product, description } = req.body
+  const { product, description, ownerData } = req.body
 
   if (!product || !description) {
     res.status(400)
     throw new Error('Please add a product and description')
   }
+
+  // Get token from req body
+  const token = ownerData.hashValue
+
+  // Verify token
+  const decoded = jwt.verify(token, process.env.JWT_CUSTOMER_SECRET)
+
+  // Get owner id from token
+  const ownerId = decoded.id
 
   const ticket = await Ticket.create({
     customer: req.customer._id,
@@ -51,8 +61,10 @@ const createCustomerTicket = asyncHandler(async (req, res) => {
     product,
     description,
     status: 'new',
-    createdBy: 'customer',
+    owner: ownerId,
+    createdBy: 'Me',
   })
+  // console.log(ticket, ownerId, ownerData)
   res.status(201).json(ticket)
 })
 

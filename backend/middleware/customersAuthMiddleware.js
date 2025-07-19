@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 const asyncHandler = require('express-async-handler')
-const Customer = require('../models/customers/customerModel');
+const Customer = require('../models/customers/customerModel')
 
 const protectedCustomerRoute = asyncHandler(async (req, res, next) => {
   let token
@@ -11,14 +11,14 @@ const protectedCustomerRoute = asyncHandler(async (req, res, next) => {
   ) {
     try {
       // Get token from header
-      token = req.headers.authorization.split(' ')[1];
+      token = req.headers.authorization.split(' ')[1]
 
       // Verify token
-      const decoded = jwt.verify(token, process.env.JWT_CUSTOMER_SECRET);
+      const decoded = jwt.verify(token, process.env.JWT_CUSTOMER_SECRET)
 
       // Get customer user from token
-      req.customer = await Customer.findById(decoded.id).select('-password');
-      
+      req.customer = await Customer.findById(decoded.id).select('-password')
+
       // NOTE: We need to check if a user was found
       // https://www.udemy.com/course/react-front-to-back-2022/learn/lecture/30591026#questions/17843570
       if (!req.customer) {
@@ -40,4 +40,4 @@ const protectedCustomerRoute = asyncHandler(async (req, res, next) => {
   }
 })
 
-module.exports = { protectedCustomerRoute };
+module.exports = { protectedCustomerRoute }

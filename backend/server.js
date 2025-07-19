@@ -5,6 +5,7 @@ require('dotenv').config()
 const { errorHandler } = require('./middleware/errorMiddleware')
 const connectDB = require('./config/db')
 const PORT = process.env.PORT || 5000
+const cors = require('cors');
 
 // Connect to database
 connectDB()
@@ -14,9 +15,17 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
+
+app.use(cors({
+  origin: 'https://tickethelp.vercel.app/', 
+  credentials: true
+}));
+
 // Customer Routes
 app.use('/api/customers', require('./routes/customers/customerRoutes'))
 app.use('/api/customers/tickets', require('./routes/customers/ticketRoutes'))
+app.use('/api/customers/products', require('./routes/customers/productRoutes'))
+// app.use('/api/customers/feedbacks', require('./routes/customers/feedbackRoutes'))
 
 // Owner Routes
 app.use('/api/owners', require('./routes/owners/ownerRoutes'))

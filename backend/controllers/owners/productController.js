@@ -1,19 +1,12 @@
 const asyncHandler = require('express-async-handler')
+const productService = require('../../helper/productService')
 
-const Products = require('../../models/owners/productModel')
-
-// @desc    Get owner tickets
-// @route   GET /api/owners/tickets
+// @desc    Get owner products
+// @route   GET /api/owners/products
 // @access  Private
 const getOwnerProducts = asyncHandler(async (req, res) => {
-  try {
-    const products = await Products.find({ owners: req.owner._id })
-
-    res.status(200).json(products)
-  } catch (error) {
-    res.status(500)
-    throw new Error('Internal Server Error')
-  }
+  const products = await productService.getOwnerProducts(req.owner._id)
+  res.status(200).json(products);
 })
 
 module.exports = {

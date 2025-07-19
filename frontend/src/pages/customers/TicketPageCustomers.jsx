@@ -11,10 +11,15 @@ import {
   getCustomerTicketNotes,
   createCustomerTicketNote,
 } from '../../features/customers/notes/noteSlice'
+import {
+  getCustomerTicketFeedback,
+  createCustomerTicketFeedback,
+} from '../../features/customers/feedbacks/feedbackSlice'
 import { useParams, useNavigate } from 'react-router-dom'
 import BackButton from '../../components/assets/BackButton'
 import Spinner from '../../components/assets/Spinner'
 import NoteItemCustomers from '../../components/customers/NoteItemCustomers'
+import FeedbackItemCustomers from '../../components/customers/FeedbackItemCustomers'
 
 const customStyles = {
   content: {
@@ -40,6 +45,8 @@ function TicketsPageCustomers() {
 
   const { notes } = useSelector((state) => state.customersNotes)
 
+  const { feedback } = useSelector((state) => state.customersFeedback)
+
   // NOTE: no need for two useParams
   // const params = useParams()
   const navigate = useNavigate()
@@ -49,17 +56,22 @@ function TicketsPageCustomers() {
   useEffect(() => {
     dispatch(getCustomerSingleTicket(ticketId)).unwrap().catch(toast.error)
     dispatch(getCustomerTicketNotes(ticketId)).unwrap().catch(toast.error)
+    dispatch(getCustomerTicketFeedback(ticketId)).unwrap().catch(toast.error)
   }, [ticketId, dispatch])
 
   // Close ticket
   const onTicketClose = () => {
+    if (!window.confirm('Are you sure you want to close this ticket?')) {
+      return
+    }
+
     // NOTE: we can unwrap our AsyncThunkACtion here so no need for isError and
     // isSuccess state
     dispatch(closeCustomerTicket(ticketId))
       .unwrap()
       .then(() => {
         toast.success('Ticket Closed')
-        navigate('/customers/tickets')
+        navigate(`/customers/ticket/${ticketId}/feedback-page`)
       })
       .catch(toast.error)
   }
@@ -102,6 +114,7 @@ function TicketsPageCustomers() {
           Date Submitted: {new Date(ticket.createdAt).toLocaleString('en-US')}
         </h3>
         <h3>Product: {ticket.product}</h3>
+        <h3>Creatd By: {ticket.createdBy}</h3>
         <hr />
         <div className='ticket-desc'>
           <h3>Description of Issue</h3>
@@ -150,6 +163,24 @@ function TicketsPageCustomers() {
       ) : (
         <Spinner />
       )}
+
+      {ticket.status === 'closed' &&
+        (feedback ? (
+          <>
+            <hr />
+            <FeedbackItemCustomers
+              feedback={feedback}
+              isFeedbackGiven={true}
+              ticketId={ticketId}
+            />
+          </>
+        ) : (
+          <FeedbackItemCustomers
+            feedback={feedback}
+            isFeedbackGiven={false}
+            ticketId={ticketId}
+          />
+        ))}
 
       {ticket.status !== 'closed' && (
         <button onClick={onTicketClose} className='btn btn-block btn-danger'>

@@ -1,4 +1,4 @@
-import axios from 'axios'
+import api from '../../../api'
 
 const API_URL = '/api/customers/tickets/'
 
@@ -10,7 +10,7 @@ const getCustomerTicketNotes = async (ticketId, token) => {
     },
   }
 
-  const response = await axios.get(API_URL + ticketId + '/notes', config)
+  const response = await api.get(API_URL + ticketId + '/notes', config)
 
   return response.data
 }
@@ -23,7 +23,7 @@ const createCustomerTicketNote = async (noteData, ticketId, token) => {
     },
   }
 
-  const response = await axios.post(
+  const response = await api.post(
     API_URL + ticketId + '/notes',
     {
       noteContent: noteData,

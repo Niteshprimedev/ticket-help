@@ -14,7 +14,17 @@ const ticketSchema = mongoose.Schema(
     product: {
       type: String,
       required: [true, 'Please select a product'],
-      enum: ['iPhone', 'Macbook Pro', 'iMac', 'iPad'],
+      enum: [
+        'iPhone',
+        'iMac',
+        'Macbook Pro',
+        'iPad',
+        'iPad Pro',
+        'iPad Air',
+        'AirPods',
+        'Apple Watch',
+        'Apple TV',
+      ],
     },
     description: {
       type: String,

@@ -34,6 +34,11 @@ function HeaderHome() {
               <FiUsers /> Customers
             </Link>
           </li>
+          <li>
+            <Link to='/about-us'>
+              <FiUsers /> About
+            </Link>
+          </li>
         </ul>
       </div>
     </header>

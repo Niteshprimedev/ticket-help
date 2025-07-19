@@ -34,6 +34,8 @@ Modal.setAppElement('#root')
 function TicketsPageOwners() {
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [noteContent, setNoteContent] = useState('')
+
+  const { owner } = useSelector((state) => state.ownersAuth)
   const { ticket } = useSelector((state) => state.ownersTickets)
 
   const { notes } = useSelector((state) => state.ownersNotes)
@@ -51,6 +53,9 @@ function TicketsPageOwners() {
 
   // Close ticket
   const onTicketClose = () => {
+    if (!window.confirm('Are you sure you want to close the ticket?')) {
+      return
+    }
     // NOTE: we can unwrap our AsyncThunkACtion here so no need for isError and
     // isSuccess state
     dispatch(closeOwnerTicket(ticketId))
@@ -100,6 +105,9 @@ function TicketsPageOwners() {
           Date Submitted: {new Date(ticket.createdAt).toLocaleString('en-US')}
         </h3>
         <h3>Product: {ticket.product}</h3>
+        <h3>
+          Creatd By: {ticket.createdBy === owner.name ? 'Me' : ticket.createdBy}
+        </h3>
         <hr />
         <div className='ticket-desc'>
           <h3>Description of Issue</h3>

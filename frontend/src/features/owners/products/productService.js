@@ -1,4 +1,5 @@
-import axios from 'axios'
+import api from '../../../api'
+
 const API_URL = '/api/owners/products'
 
 const getOwnerProducts = async (token) => {
@@ -8,7 +9,7 @@ const getOwnerProducts = async (token) => {
     },
   }
 
-  const response = await axios.get(API_URL, config)
+  const response = await api.get(API_URL, config)
 
   if (response.data) {
     return response.data
