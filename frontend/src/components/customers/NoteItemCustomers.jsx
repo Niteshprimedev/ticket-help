@@ -5,7 +5,7 @@ function NoteItemCustomers({ note }) {
     <div
       className='note'
       style={{
-        backgroundColor: isOwner ? 'rgba(0,0,0,0.7)' : '#fff',
+        backgroundColor: isOwner ? '#803551' : '#fff',
         color: isOwner ? '#fff' : '#000',
       }}
     >
