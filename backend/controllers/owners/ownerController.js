@@ -71,6 +71,11 @@ const loginOwner = asyncHandler(async (req, res) => {
   // Check if owner user already exists;
   const ownerUser = await Owner.findOne({ email: email })
 
+  if (!ownerUser) {
+    res.status(401)
+    throw new Error('Invalid Credentials')
+  }
+
   const isPasswordCorrect = await bcrypt.compare(password, ownerUser.password)
 
   let formattedDob
@@ -169,7 +174,7 @@ const changePasswordOwner = asyncHandler(async (req, res) => {
   )
 
   if (!isPasswordCorrect) {
-    res.status(400)
+    res.status(401)
     throw new Error('Please enter correct current password')
   }
 

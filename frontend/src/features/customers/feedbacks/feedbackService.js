@@ -15,6 +15,20 @@ const getCustomerTicketFeedback = async (ticketId, token) => {
   return response.data
 }
 
+// Get review feedback
+const getCustomerReviewFeedbacks = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+
+  const response = await api.get('/api/customers/feedbacks', config)
+
+  return response.data
+}
+
+// Add customer feedback
 const createCustomerTicketFeedback = async (feedbackData, ticketId, token) => {
   const config = {
     headers: {
@@ -34,6 +48,7 @@ const createCustomerTicketFeedback = async (feedbackData, ticketId, token) => {
 const feedbackService = {
   getCustomerTicketFeedback,
   createCustomerTicketFeedback,
+  getCustomerReviewFeedbacks,
 }
 
 export default feedbackService

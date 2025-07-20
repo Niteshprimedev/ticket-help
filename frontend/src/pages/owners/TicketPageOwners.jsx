@@ -11,10 +11,14 @@ import {
   getOwnerTicketNotes,
   createOwnerTicketNote,
 } from '../../features/owners/notes/noteSlice'
+import {
+  getOwnerTicketFeedback,
+} from '../../features/owners/feedbacks/feedbackSlice'
 import { useParams, useNavigate } from 'react-router-dom'
 import BackButton from '../../components/assets/BackButton'
 import Spinner from '../../components/assets/Spinner'
 import NoteItemOwners from '../../components/owners/NoteItemOwners'
+import FeedbackItemOwners from '../../components/owners/FeedbackItemOwners'
 
 const customStyles = {
   content: {
@@ -40,6 +44,8 @@ function TicketsPageOwners() {
 
   const { notes } = useSelector((state) => state.ownersNotes)
 
+  const { feedback } = useSelector((state) => state.ownersFeedback)
+
   // NOTE: no need for two useParams
   // const params = useParams()
   const navigate = useNavigate()
@@ -49,6 +55,7 @@ function TicketsPageOwners() {
   useEffect(() => {
     dispatch(getOwnerSingleTicket(ticketId)).unwrap().catch(toast.error)
     dispatch(getOwnerTicketNotes(ticketId)).unwrap().catch(toast.error)
+    dispatch(getOwnerTicketFeedback(ticketId)).unwrap().catch(toast.error)
   }, [ticketId, dispatch])
 
   // Close ticket
@@ -155,6 +162,15 @@ function TicketsPageOwners() {
         notes.map((note) => <NoteItemOwners key={note._id} note={note} />)
       ) : (
         <Spinner />
+      )}
+
+      {ticket.status === 'closed' && feedback && (
+        <>
+          <hr />
+          <FeedbackItemOwners
+            feedback={feedback}
+          />
+        </>
       )}
 
       {ticket.status !== 'closed' && (

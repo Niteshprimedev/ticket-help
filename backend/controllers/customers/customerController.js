@@ -71,6 +71,11 @@ const loginCustomer = asyncHandler(async (req, res) => {
   // Check if customer user already exists;
   const customerUser = await Customer.findOne({ email: email })
 
+  if (!customerUser) {
+    res.status(401)
+    throw new Error('Invalid Credentials')
+  }
+
   const isPasswordCorrect = await bcrypt.compare(
     password,
     customerUser.password
@@ -118,7 +123,11 @@ const getMeCustomer = asyncHandler(async (req, res) => {
     email: customerUser.email,
     gender: customerUser.gender,
     dob: customerUser.dob ? formattedDob : '',
-    token: generateToken(customerUser._id, process.env.JWT_CUSTOMER_SECRET, '30d'),
+    token: generateToken(
+      customerUser._id,
+      process.env.JWT_CUSTOMER_SECRET,
+      '30d'
+    ),
   }
   res.status(200).json(formattedUser)
 })
@@ -180,7 +189,7 @@ const changePasswordCustomer = asyncHandler(async (req, res) => {
   )
 
   if (!isPasswordCorrect) {
-    res.status(400)
+    res.status(401)
     throw new Error('Please enter correct current password')
   }
 

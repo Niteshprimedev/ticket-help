@@ -67,6 +67,7 @@ function NewTicketOwners() {
               className='form-control'
               value={customerName}
               placeholder='Please enter customer name'
+              required
               onChange={(e) => setCustomerName(e.target.value)}
             />
           </div>
@@ -80,6 +81,7 @@ function NewTicketOwners() {
               className='form-control'
               value={customerEmail}
               placeholder='Please enter customer email'
+              required
               onChange={(e) => setCustomerEmail(e.target.value)}
             />
           </div>
@@ -92,6 +94,7 @@ function NewTicketOwners() {
               id='product'
               value={product}
               onChange={(e) => setProduct(e.target.value)}
+              required
             >
               {/* <option value='iPhone'>iPhone</option>
               <option value='iPad'>iPad</option> */}
@@ -113,6 +116,7 @@ function NewTicketOwners() {
               placeholder='Description'
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              required
             ></textarea>
           </div>
           <div className='form-group'>

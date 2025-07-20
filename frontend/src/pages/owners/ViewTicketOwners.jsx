@@ -26,7 +26,7 @@ function ViewTicketOwners() {
   return (
     <>
       <BackButton isOwner={true} />
-      <h1 className='owner'>Tickets</h1>
+      <h1 className='owner'>My Tickets</h1>
       <div className='tickets owner'>
         <div className='ticket-headings'>
           <div>Date</div>

@@ -6,7 +6,7 @@ import {
   FaShoppingCart,
   FaTicketAlt,
 } from 'react-icons/fa'
-import { AiOutlineInfoCircle } from 'react-icons/ai'
+import { AiOutlineInfoCircle, AiFillPlusSquare } from 'react-icons/ai'
 import { Link, useNavigate } from 'react-router-dom'
 import { logoutOwner } from '../../features/owners/auth/authSlice'
 import { useDispatch, useSelector } from 'react-redux'
@@ -32,13 +32,18 @@ function HeaderOwners() {
         {owner ? (
           <ul>
             <li>
+              <Link to='/owners/products' className='owner'>
+                <FaShoppingCart></FaShoppingCart> Products
+              </Link>
+            </li>
+            <li>
               <Link to='/owners/tickets' className='owner'>
                 <FaTicketAlt></FaTicketAlt> Tickets
               </Link>
             </li>
             <li>
-              <Link to='/owners/products' className='owner'>
-                <FaShoppingCart></FaShoppingCart> products
+              <Link to='/owners/new-ticket' className='owner'>
+                <AiFillPlusSquare></AiFillPlusSquare> Create
               </Link>
             </li>
             <li>
