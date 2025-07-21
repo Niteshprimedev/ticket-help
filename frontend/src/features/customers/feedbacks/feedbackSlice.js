@@ -4,6 +4,7 @@ import feedbackService from './feedbackService'
 import { extractErrorMessage } from '../../../utils'
 
 const initialState = {
+  feedbacks: [],
   feedback: null,
 }
 
@@ -14,6 +15,19 @@ export const getCustomerTicketFeedback = createAsyncThunk(
     try {
       const token = thunkAPI.getState().customersAuth.customer.token
       return await feedbackService.getCustomerTicketFeedback(ticketId, token)
+    } catch (error) {
+      return thunkAPI.rejectWithValue(extractErrorMessage(error))
+    }
+  }
+)
+
+// Get review feedbacks
+export const getCustomerReviewFeedbacks = createAsyncThunk(
+  'feedback/getAll',
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().customersAuth.customer.token
+      return await feedbackService.getCustomerReviewFeedbacks(token)
     } catch (error) {
       return thunkAPI.rejectWithValue(extractErrorMessage(error))
     }
@@ -38,7 +52,7 @@ export const createCustomerTicketFeedback = createAsyncThunk(
 )
 
 const feedbackSlice = createSlice({
-  name: 'customersFeedback',
+  name: 'customersFeedbacks',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -57,6 +71,15 @@ const feedbackSlice = createSlice({
       })
       .addCase(createCustomerTicketFeedback.fulfilled, (state, action) => {
         state.feedback = action.payload
+      })
+      .addCase(getCustomerReviewFeedbacks.pending, (state) => {
+        state.feedbacks = []
+      })
+      .addCase(getCustomerReviewFeedbacks.fulfilled, (state, action) => {
+        state.feedbacks = action.payload
+      })
+      .addCase(getCustomerReviewFeedbacks.rejected, (state, action) => {
+        state.feedbacks = []
       })
   },
 })

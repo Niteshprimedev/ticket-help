@@ -1,5 +1,5 @@
 const express = require('express')
-const router = express.Router();
+const router = express.Router()
 
 const {
   getOwnerTickets,
@@ -7,7 +7,7 @@ const {
   createOwnerTicket,
   updateOwnerTicket,
   deleteOwnerTicket,
-} = require('../../controllers/owners/ticketController');
+} = require('../../controllers/owners/ticketController')
 
 const { protectedOwnerRoute } = require('../../middleware/ownersAuthMiddleware')
 
@@ -15,7 +15,14 @@ const { protectedOwnerRoute } = require('../../middleware/ownersAuthMiddleware')
 const noteRouter = require('./noteRoutes')
 router.use('/:ticketId/notes', noteRouter)
 
-router.route('/').get(protectedOwnerRoute, getOwnerTickets).post(protectedOwnerRoute, createOwnerTicket);
+// Re-route into feedback router
+const feedbackRouter = require('./feedbackRoutes')
+router.use('/:ticketId/feedback', feedbackRouter)
+
+router
+  .route('/')
+  .get(protectedOwnerRoute, getOwnerTickets)
+  .post(protectedOwnerRoute, createOwnerTicket)
 
 router
   .route('/:ticketId')

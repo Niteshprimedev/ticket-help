@@ -370,6 +370,10 @@ h3 {
   position: relative;
 }
 
+.feedback.text-center{
+  text-align: center;
+}
+
 .feedback-head {
   background: #f4f4f4;
   padding: 5px 20px;
@@ -395,11 +399,19 @@ h3 {
   justify-content: flex-start;
 }
 
+.feedback-rating.flex-center{
+  justify-content: center;
+}
+
 .feedback .rating {
   color: #333;
   font-size: 18px;
   font-weight: 600;
   margin-right: 5px;
+}
+
+.feedback .rating.owner {
+  color: #600226;
 }
 
 .feedback a:hover {

@@ -12,7 +12,7 @@ function TicketItemOwners({ ticket }) {
         to={`/owners/ticket/${_id}`}
         className='btn btn-reverse btn-sm owner'
       >
-        View
+        {status === 'closed' ? 'View' : 'Resolve'}
       </Link>
     </div>
   )

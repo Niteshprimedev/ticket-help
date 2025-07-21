@@ -45,7 +45,7 @@ function TicketsPageCustomers() {
 
   const { notes } = useSelector((state) => state.customersNotes)
 
-  const { feedback } = useSelector((state) => state.customersFeedback)
+  const { feedback } = useSelector((state) => state.customersFeedbacks)
 
   // NOTE: no need for two useParams
   // const params = useParams()

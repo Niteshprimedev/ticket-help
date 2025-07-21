@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler')
 const Products = require('../models/owners/productModel')
 const { generateToken } = require('../helper/generateToken')
+const { generateOwnerId } = require('../helper/generateOwnerId');
 
 // Registering Owner will be added to chosen products
 const addOwnerToProducts = asyncHandler(async (products, ownerId) => {
@@ -47,7 +48,7 @@ const getOwnersFromProducts = asyncHandler(async (productName) => {
         '1d'
       )
 
-      const ownerId = `${owner.name} ${owner._id.toString().slice(2, 7)}`
+      const ownerId = generateOwnerId(owner)
       const formattedOwner = {
         hashKey: ownerId,
         hashValue: token,

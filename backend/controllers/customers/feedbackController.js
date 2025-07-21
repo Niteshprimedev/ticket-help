@@ -2,12 +2,13 @@ const asyncHandler = require('express-async-handler')
 
 const Feedback = require('../../models/customers/feedbackModel')
 const Ticket = require('../../models/customers/ticketModel')
+const { generateOwnerId } = require('../../helper/generateOwnerId')
 
 // NOTE: no need to get the user, we already have them on req object from
 // protect middleware. The protect middleware already checks for valid user.
 
 // @desc    Get customers feedback for a ticket
-// @route   GET /api/customers/tickets/:ticketId/feedback
+// @route   GET /api/customers/tickets/:ticketId/feedbacks
 // @access  Private
 const getCustomerTicketFeedback = asyncHandler(async (req, res) => {
   const ticket = await Ticket.findById(req.params.ticketId)
@@ -22,8 +23,71 @@ const getCustomerTicketFeedback = asyncHandler(async (req, res) => {
   res.status(200).json(feedback)
 })
 
+// @desc    Get owners feedback for reviews
+// @route   GET /api/customers/tickets/feedbacks
+// @access  Private
+const getCustomerReviewFeedbacks = asyncHandler(async (req, res) => {
+  try {
+    let feedbacks = await Feedback.aggregate([
+      {
+        $group: {
+          _id: '$owner',
+          reviews: {
+            $push: {
+              feedbackMsg: '$feedbackMsg',
+              addedBy: '$addedBy',
+              rating: '$rating',
+            },
+          },
+          averageRating: { $avg: '$rating' },
+        },
+      },
+      {
+        $lookup: {
+          from: 'owners',
+          localField: '_id',
+          foreignField: '_id',
+          as: 'ownerData',
+        },
+      },
+      { $unwind: '$ownerData' },
+      {
+        $project: {
+          _id: 0,
+          ownerId: '$_id',
+          ownerName: '$ownerData.name',
+          averageRating: { $round: ['$averageRating', 1] },
+          reviews: 1,
+          totalCustomers: { $size: '$reviews' },
+        },
+      },
+    ])
+
+    feedbacks = feedbacks.map((feedback) => {
+      feedback.ownerName = generateOwnerId({
+        _id: feedback.ownerId,
+        name: feedback.ownerName,
+      })
+
+      feedback.rating = feedback.averageRating
+      feedback.feedbackMsg = feedback.reviews[0].feedbackMsg
+      feedback.addedBy = feedback.reviews[0].addedBy
+
+      delete feedback.ownerId
+      delete feedback.reviews
+      return feedback
+    })
+
+    // console.log(feedbacks)
+    res.status(200).json(feedbacks)
+  } catch (error) {
+    res.status(500)
+    throw new Error(error)
+  }
+})
+
 // @desc    Create ticket note
-// @route   POST /api/customers/tickets/:ticketId/feedback
+// @route   POST /api/customers/tickets/:ticketId/feedbacks
 // @access  Private
 const addCustomerTicketFeedback = asyncHandler(async (req, res) => {
   const { feedbackMsg, rating } = req.body
@@ -60,4 +124,5 @@ const addCustomerTicketFeedback = asyncHandler(async (req, res) => {
 module.exports = {
   getCustomerTicketFeedback,
   addCustomerTicketFeedback,
+  getCustomerReviewFeedbacks,
 }

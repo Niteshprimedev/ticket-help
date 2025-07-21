@@ -4,6 +4,7 @@ import ownersAuthReducer from '../features/owners/auth/authSlice'
 import ownersTicketReducer from '../features/owners/tickets/ticketSlice'
 import ownersNoteReducer from '../features/owners/notes/noteSlice'
 import ownersProductReducer from '../features/owners/products/productSlice'
+import ownersFeedbackReducer from '../features/owners/feedbacks/feedbackSlice'
 
 import customersAuthReducer from '../features/customers/auth/authSlice'
 import customersTicketReducer from '../features/customers/tickets/ticketSlice'
@@ -17,10 +18,11 @@ export const store = configureStore({
     customersTickets: customersTicketReducer,
     customersNotes: customersNoteReducer,
     customersProductOwners: customersProductOwnerReducer,
-    customersFeedback: customersFeedbackReducer,
+    customersFeedbacks: customersFeedbackReducer,
     ownersAuth: ownersAuthReducer,
     ownersTickets: ownersTicketReducer,
     ownersNotes: ownersNoteReducer,
     ownersProducts: ownersProductReducer,
+    ownersFeedback: ownersFeedbackReducer,
   },
 })

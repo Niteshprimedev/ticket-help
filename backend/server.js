@@ -15,9 +15,15 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
+// app.use(
+//   cors({
+//     origin: 'https://ticket-help-niteshprimedev.vercel.app',
+//     credentials: true,
+//   })
+// )
 app.use(
   cors({
-    origin: 'https://ticket-help-niteshprimedev.vercel.app',
+    origin: 'http://localhost:3000',
     credentials: true,
   })
 )
@@ -26,7 +32,10 @@ app.use(
 app.use('/api/customers', require('./routes/customers/customerRoutes'))
 app.use('/api/customers/tickets', require('./routes/customers/ticketRoutes'))
 app.use('/api/customers/products', require('./routes/customers/productRoutes'))
-// app.use('/api/customers/feedbacks', require('./routes/customers/feedbackRoutes'))
+app.use(
+  '/api/customers/feedbacks',
+  require('./routes/customers/reviewRoutes')
+)
 
 // Owner Routes
 app.use('/api/owners', require('./routes/owners/ownerRoutes'))
