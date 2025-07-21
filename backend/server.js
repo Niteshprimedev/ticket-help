@@ -15,12 +15,22 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
-// app.use(
-//   cors({
-//     origin: 'https://ticket-help-niteshprimedev.vercel.app',
-//     credentials: true,
-//   })
-// )
+if (process.env.NODE_ENV === 'production') {
+  // Use Set Cors:
+  app.use(
+    cors({
+      origin: 'https://ticket-help-niteshprimedev.vercel.app',
+      credentials: true,
+    })
+  )
+} else {
+  app.use(
+    cors({
+      origin: 'https://ticket-help-niteshprimedev.vercel.app',
+      credentials: true,
+    })
+  )
+}
 
 // Customer Routes
 app.use('/api/customers', require('./routes/customers/customerRoutes'))
@@ -35,13 +45,6 @@ app.use('/api/owners/products', require('./routes/owners/productRoutes'))
 
 // Serve Frontend
 if (process.env.NODE_ENV === 'production') {
-  // Use Set Cors:
-  app.use(
-    cors({
-      origin: 'https://ticket-help-niteshprimedev.vercel.app',
-      credentials: true,
-    })
-  )
   // Set build folder as static
   app.use(express.static(path.join(__dirname, '../frontend/build')))
 
@@ -51,12 +54,6 @@ if (process.env.NODE_ENV === 'production') {
   })
 } else {
   app.get('/', (_, res) => {
-    app.use(
-      cors({
-        origin: 'http://localhost:3000',
-        credentials: true,
-      })
-    )
     res.status(200).json({ message: 'Welcome to the Support Desk API' })
   })
 }
