@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { toast } from 'react-toastify'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FaSignInAlt } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
 import { loginOwner } from '../../features/owners/auth/authSlice'
@@ -100,6 +100,19 @@ function LoginOwners() {
             <button className='btn btn-block btn-owner'>Submit</button>
           </div>
         </form>
+      </section>
+      <section>
+        <div className='my owner'>
+          <span className='my owner'>Don't have an account?</span>{' '}
+          <Link to='/owners/register' className='link owner'>
+            Register
+          </Link>
+        </div>
+        <div class='demo-text owner'>
+          <p>Try App Demo: </p>
+          <p>Email: owner123@gmail.com</p>
+          <p>Password: owner123@</p>
+        </div>
       </section>
     </>
   )

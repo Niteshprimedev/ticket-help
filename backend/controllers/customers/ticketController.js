@@ -62,7 +62,7 @@ const createCustomerTicket = asyncHandler(async (req, res) => {
     description,
     status: 'new',
     owner: ownerId,
-    createdBy: 'Me',
+    createdBy: req.customer.name,
   })
   // console.log(ticket, ownerId, ownerData)
   res.status(201).json(ticket)
