@@ -114,7 +114,10 @@ function TicketsPageCustomers() {
           Date Submitted: {new Date(ticket.createdAt).toLocaleString('en-US')}
         </h3>
         <h3>Product: {ticket.product}</h3>
-        <h3>Creatd By: {ticket.createdBy}</h3>
+        <h3>
+          Creatd By:{' '}
+          {ticket.createdBy === customer.name ? 'Me' : ticket.createdBy}
+        </h3>
         <hr />
         <div className='ticket-desc'>
           <h3>Description of Issue</h3>

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { toast } from 'react-toastify'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FaSignInAlt } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
 import { loginCustomer } from '../../features/customers/auth/authSlice'
@@ -47,10 +47,10 @@ function LoginCustomers() {
         // getting a good response from our API or catch the AsyncThunkAction
         // rejection to show an error message
         setFormData((prevState) => ({
-            ...prevState,
-            email: '',
-            password: '',
-        }));
+          ...prevState,
+          email: '',
+          password: '',
+        }))
         toast.success(`Logged in as ${customer.name}`)
         navigate('/customers')
       })
@@ -100,6 +100,19 @@ function LoginCustomers() {
             <button className='btn btn-block'>Submit</button>
           </div>
         </form>
+      </section>
+      <section>
+        <div className='my'>
+          <span className='my'>Don't have an account?</span>{' '}
+          <Link to='/customers/register' className='link'>
+            Register
+          </Link>
+        </div>
+        <div class='demo-text'>
+          <p>Try App Demo: </p>
+          <p>Email: customer123@gmail.com</p>
+          <p>Password: customer123@</p>
+        </div>
       </section>
     </>
   )

@@ -26,7 +26,7 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   app.use(
     cors({
-      origin: 'https://ticket-help-niteshprimedev.vercel.app',
+      origin: 'http://localhost:3000',
       credentials: true,
     })
   )

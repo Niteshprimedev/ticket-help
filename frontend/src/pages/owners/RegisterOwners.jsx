@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { FaUser } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
@@ -144,6 +144,14 @@ function RegisterOwners() {
             <button className='btn btn-block btn-owner'>Submit</button>
           </div>
         </form>
+      </section>
+      <section>
+        <div className='my-1 owner'>
+          <span className='my owner'>Already have an account?</span>{' '}
+          <Link to='/owners/login' className='link owner'>
+            Login
+          </Link>
+        </div>
       </section>
     </>
   )

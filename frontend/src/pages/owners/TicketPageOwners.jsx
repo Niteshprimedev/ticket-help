@@ -56,6 +56,7 @@ function TicketsPageOwners() {
     dispatch(getOwnerSingleTicket(ticketId)).unwrap().catch(toast.error)
     dispatch(getOwnerTicketNotes(ticketId)).unwrap().catch(toast.error)
     dispatch(getOwnerTicketFeedback(ticketId)).unwrap().catch(toast.error)
+    console.log(ticket);
   }, [ticketId, dispatch])
 
   // Close ticket

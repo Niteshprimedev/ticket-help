@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { FaUser } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
@@ -135,6 +135,14 @@ function RegisterCustomers() {
             <button className='btn btn-block'>Submit</button>
           </div>
         </form>
+      </section>
+      <section>
+        <div className='my'>
+          <span className='my'>Already have an account?</span>{' '}
+          <Link to='/customers/login' className='link'>
+            Login
+          </Link>
+        </div>
       </section>
     </>
   )

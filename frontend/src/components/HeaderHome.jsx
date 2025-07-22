@@ -1,3 +1,4 @@
+import { FaMoon, FaSun } from 'react-icons/fa'
 import { FiUsers } from 'react-icons/fi'
 import { MdPeopleOutline } from 'react-icons/md'
 import { Link, useNavigate } from 'react-router-dom'
@@ -39,6 +40,10 @@ function HeaderHome() {
               <FiUsers /> About
             </Link>
           </li>
+          {/* <li>
+            <FaMoon></FaMoon>
+            <FaSun></FaSun>
+          </li> */}
         </ul>
       </div>
     </header>
