@@ -183,7 +183,7 @@ const changePasswordCustomer = asyncHandler(async (req, res) => {
   // Check if customer user already exists;
   const customerUser = await Customer.findOne({ email: req.customer.email })
 
-  if (oldPassword === 'customer123' && customerUser.name === 'customer123') {
+  if (oldPassword === 'customer123@' && customerUser.name === 'customer123') {
     res.status(400)
     throw new Error('Change password is disabled for this account, customer123')
   }
