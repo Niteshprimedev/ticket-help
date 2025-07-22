@@ -168,6 +168,11 @@ const changePasswordOwner = asyncHandler(async (req, res) => {
   // Check if owner user already exists;
   const ownerUser = await Owner.findOne({ email: req.owner.email })
 
+  if (oldPassword === 'owner123' && ownerUser.name === 'owner123') {
+    res.status(400)
+    throw new Error('Change password is disabled for this account, owner123')
+  }
+
   const isPasswordCorrect = await bcrypt.compare(
     oldPassword,
     ownerUser.password
