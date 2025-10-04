@@ -19,7 +19,11 @@ if (process.env.NODE_ENV === 'production') {
   // Use Set Cors:
   app.use(
     cors({
-      origin: 'https://ticket-help-niteshprimedev.vercel.app',
+      origin:[
+        'https://ticket-help-niteshprimedev.vercel.app', // main domain
+        'https://tickethelp-niteshprimedev.vercel.app'   // extra domain you want to allow
+      ],
+      // origin: 'https://ticket-help-niteshprimedev.vercel.app',
       credentials: true,
     })
   )
